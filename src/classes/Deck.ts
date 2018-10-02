@@ -5,19 +5,19 @@ export default class Deck {
 
   constructor() {
     this._cards = this._buildCleanDeck();
-    this.shuffle();
+    this._shuffle();
   }
 
   get cards(): ICard[] {
     return this._cards;
   }
 
-  public shuffle() {
-    this._cards.sort(() => 0.5 - Math.random());
-  }
-
   public dealCard(): ICard {
     return this._cards.shift() as ICard;
+  }
+
+  private _shuffle() {
+    this._cards.sort(() => 0.5 - Math.random());
   }
 
   private _buildCleanDeck(): ICard[] {

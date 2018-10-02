@@ -66,13 +66,10 @@ describe("Deck", () => {
         expect(deck.cards).toContainEqual(card);
       });
     });
-  });
-  describe("shuffle", () => {
     it("should randomise the order of the cards in the deck", () => {
       // Arrange
       const deck = new Deck();
       // Act
-      deck.shuffle();
       // Assert
       expect(deck.cards).not.toEqual(cleanDeck);
     });
