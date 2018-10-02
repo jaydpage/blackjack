@@ -1,7 +1,7 @@
 import ICard from "../interface/ICard";
 
 export default class Deck {
-  private _cards: ICard[];
+  private readonly _cards: ICard[];
 
   constructor() {
     this._cards = this.buildCleanDeck();
@@ -12,7 +12,11 @@ export default class Deck {
   }
 
   public shuffle() {
-    this._cards.sort(() => Math.random());
+    this._cards.sort(() => 0.5 - Math.random());
+  }
+
+  public dealCard(): ICard {
+    return this._cards.shift() as ICard;
   }
 
   private buildCleanDeck(): ICard[] {
