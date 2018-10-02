@@ -1,5 +1,4 @@
 import ICard from "../interfaces/ICard";
-import { cards } from "../constants/cards";
 
 export default class Deck {
   private readonly _cards: ICard[];

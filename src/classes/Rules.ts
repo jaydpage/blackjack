@@ -17,28 +17,28 @@ class Rules {
   }
 
   public isFiveCardTrick(hand: ICard[]): boolean {
-    const score = this._getScore(hand);
-    const isNotBust = this._isNotBust(score);
+    const isNotBust = !this.isBust(hand);
     const hasFiveCards = hand.length === 5;
 
     return isNotBust && hasFiveCards;
   }
 
   public isGameATie(playerHand: ICard[], dealerHand: ICard[]) {
-    const playerScore = this._getScore(playerHand);
-    const playerIsNotBust = this._isNotBust(playerScore);
-    const dealerScore = this._getScore(dealerHand);
+    const playerScore = this.getScore(playerHand);
+    const playerIsNotBust = !this.isBust(playerHand);
+    const dealerScore = this.getScore(dealerHand);
     const dealerMinScoreSatisfied = dealerScore >= 17;
     return (
       playerScore === dealerScore && playerIsNotBust && dealerMinScoreSatisfied
     );
   }
 
-  private _isNotBust(score: number): boolean {
-    return score <= this.blackjackScore;
+  public isBust(hand: ICard[]) {
+    const score = this.getScore(hand);
+    return score > this.blackjackScore;
   }
 
-  private _getScore(hand: ICard[]): number {
+  public getScore(hand: ICard[]): number {
     return hand.reduce((acc, curr) => {
       return acc + curr.value;
     }, 0);
