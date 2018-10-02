@@ -13,6 +13,20 @@ class Rules {
 
     return containsTwoCards && containsAce && containsPictureCard;
   }
+
+  public isFiveCardTrick(hand: ICard[]): boolean {
+    const score = this._getScore(hand);
+    const isNotBust = score <= 21;
+    const hasFiveCards = hand.length === 5;
+
+    return isNotBust && hasFiveCards;
+  }
+
+  private _getScore(hand: ICard[]): number {
+    return hand.reduce((acc, curr) => {
+      return acc + curr.value;
+    }, 0);
+  }
 }
 
 export const rules = new Rules();

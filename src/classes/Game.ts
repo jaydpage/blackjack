@@ -28,12 +28,6 @@ export default class Game {
     // console.log("_dealerCards", this._dealerHand);
   }
 
-  private _getScore(hand: ICard[]): number {
-    return hand.reduce((acc, curr) => {
-      return acc + curr.value;
-    }, 0);
-  }
-
   private _resetGameState() {
     this._deck = new Deck();
     this._playerHand = [];
