@@ -1,13 +1,11 @@
+import { cards } from "../test_helpers/cards";
 import { rules } from "./Rules";
 
 describe("Rules", () => {
   describe("isPontoon", () => {
     it("should return true when hand has exactly one ace and one picture card", () => {
       // Arrange
-      const hand = [
-        { name: "Ace", suit: "Hearts", value: 11 },
-        { name: "Queen", suit: "Diamonds", value: 10 },
-      ];
+      const hand = [cards.aceOfHeartsValueEleven, cards.queenOfDiamonds];
       // Act
       const result = rules.isPontoon(hand);
       // Assert
@@ -16,9 +14,9 @@ describe("Rules", () => {
     it("should return false when hand does not contain exactly one ace and one picture card", () => {
       // Arrange
       const hand = [
-        { name: "Ace", suit: "Clubs", value: 1 },
-        { name: "Queen", suit: "Diamonds", value: 10 },
-        { name: "King", suit: "Diamonds", value: 10 },
+        cards.aceOfClubsValueEleven,
+        cards.queenOfDiamonds,
+        cards.kingOfDiamonds,
       ];
       // Act
       const result = rules.isPontoon(hand);
@@ -30,11 +28,11 @@ describe("Rules", () => {
     it("should return true when hand has 5 cards and is not bust", () => {
       // Arrange
       const hand = [
-        { name: "Ace", suit: "Clubs", value: 1 },
-        { name: "Two", suit: "Diamonds", value: 2 },
-        { name: "Four", suit: "Diamonds", value: 4 },
-        { name: "Three", suit: "Hearts", value: 3 },
-        { name: "Ten", suit: "Spades", value: 10 },
+        cards.aceOfClubsValueOne,
+        cards.twoOfDiamonds,
+        cards.fourOfDiamonds,
+        cards.threeOfHearts,
+        cards.tenOfSpades,
       ];
       // Act
       const result = rules.isFiveCardTrick(hand);
@@ -44,11 +42,11 @@ describe("Rules", () => {
     it("should return false when hand has 5 cards but is bust", () => {
       // Arrange
       const hand = [
-        { name: "Ace", suit: "Clubs", value: 1 },
-        { name: "Ace", suit: "Hearts", value: 1 },
-        { name: "Four", suit: "Clubs", value: 4 },
-        { name: "Seven", suit: "Diamonds", value: 7 },
-        { name: "Jack", suit: "Spades", value: 10 },
+        cards.aceOfClubsValueOne,
+        cards.aceOfHeartsValueOne,
+        cards.fourOfClubs,
+        cards.sevenOfDiamonds,
+        cards.jackOfSpades,
       ];
       // Act
       const result = rules.isFiveCardTrick(hand);
@@ -57,11 +55,92 @@ describe("Rules", () => {
     });
     it("should return false when hand has less than 5", () => {
       // Arrange
-      const hand = [
-        { name: "Ace", suit: "Clubs", value: 1 },
-      ];
+      const hand = [cards.aceOfClubsValueOne];
       // Act
       const result = rules.isFiveCardTrick(hand);
+      // Assert
+      expect(result).toBe(false);
+    });
+  });
+  describe("isGameATie", () => {
+    it("should return true if both hands are blackjack", () => {
+      // Arrange
+      const playerHand = [
+        cards.sevenOfDiamonds,
+        cards.fourOfSpades,
+        cards.jackOfSpades,
+      ];
+
+      const dealerHand = [cards.tenOfHearts, cards.aceOfClubsValueEleven];
+      // Act
+      const result = rules.isGameATie(playerHand, dealerHand);
+      // Assert
+      expect(result).toBe(true);
+    });
+    it("should return true if both scores equal and the player is not bust and the dealer score at least 17", () => {
+      // Arrange
+      const playerHand = [
+        cards.nineOfHearts,
+        cards.twoOfDiamonds,
+        cards.sixOfSpades,
+      ];
+
+      const dealerHand = [
+          cards.tenOfClubs,
+          cards.sevenOfClubs,
+      ];
+      // Act
+      const result = rules.isGameATie(playerHand, dealerHand);
+      // Assert
+      expect(result).toBe(true);
+    });
+    it("should return false if both scores are not equal", () => {
+      // Arrange
+      const playerHand = [
+          cards.twoOfHearts,
+          cards.fourOfHearts,
+          cards.eightOfHearts,
+      ];
+
+      const dealerHand = [
+          cards.tenOfSpades,
+          cards.eightOfDiamonds,
+      ];
+      // Act
+      const result = rules.isGameATie(playerHand, dealerHand);
+      // Assert
+      expect(result).toBe(false);
+    });
+    it("should return false if player is bust", () => {
+      // Arrange
+      const playerHand = [
+          cards.jackOfSpades,
+          cards.fourOfHearts,
+          cards.eightOfHearts,
+      ];
+
+      const dealerHand = [
+          cards.twoOfSpades,
+          cards.fiveOfDiamonds,
+      ];
+      // Act
+      const result = rules.isGameATie(playerHand, dealerHand);
+      // Assert
+      expect(result).toBe(false);
+    });
+    it("should return false if the dealer score is not at least 17", () => {
+      // Arrange
+      const playerHand = [
+        cards.threeOfDiamonds,
+        cards.fourOfSpades,
+      ];
+
+      const dealerHand = [
+          cards.twoOfSpades,
+          cards.fiveOfDiamonds,
+      ];
+      // Act
+      const result = rules.isGameATie(playerHand, dealerHand);
       // Assert
       expect(result).toBe(false);
     });
