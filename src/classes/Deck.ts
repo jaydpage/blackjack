@@ -1,10 +1,11 @@
-import ICard from "../interface/ICard";
+import ICard from "../interfaces/ICard";
 
 export default class Deck {
   private readonly _cards: ICard[];
 
   constructor() {
-    this._cards = this.buildCleanDeck();
+    this._cards = this._buildCleanDeck();
+    this.shuffle();
   }
 
   get cards(): ICard[] {
@@ -19,7 +20,7 @@ export default class Deck {
     return this._cards.shift() as ICard;
   }
 
-  private buildCleanDeck(): ICard[] {
+  private _buildCleanDeck(): ICard[] {
     return [
       { name: "Ace", suit: "Hearts", value: 1 },
       { name: "Two", suit: "Hearts", value: 2 },

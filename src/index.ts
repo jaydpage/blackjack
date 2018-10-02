@@ -1,3 +1,3 @@
-import Game from "./class/Game";
+import Game from "./classes/Game";
 
 const game = new Game();

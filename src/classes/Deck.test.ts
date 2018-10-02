@@ -57,20 +57,20 @@ const cleanDeck = [
 
 describe("Deck", () => {
   describe("constructor", () => {
-    it("sholud initialise with a clean unshuffled deck", () => {
+    it("sholud initialise with a full clean deck", () => {
       // Arrange
       const deck = new Deck();
       // Act
-      const expected = cleanDeck;
       // Assert
-      expect(deck.cards).toEqual(expected);
+      cleanDeck.forEach((card) => {
+        expect(deck.cards).toContainEqual(card);
+      });
     });
   });
   describe("shuffle", () => {
     it("should randomise the order of the cards in the deck", () => {
       // Arrange
       const deck = new Deck();
-      const expected = cleanDeck;
       // Act
       deck.shuffle();
       // Assert
