@@ -2,7 +2,7 @@ import ICard from "../interfaces/ICard";
 import IGameState from "../interfaces/IGameState";
 import { helpers } from "./Helpers";
 
-class CommandLineInterface {
+class CommandLine {
   public promptUserAction(): string {
     // Capture user input and return
     return "Hit";
@@ -23,4 +23,4 @@ class CommandLineInterface {
   }
 }
 
-export const commandLineInterface = new CommandLineInterface();
+export const commandLine = new CommandLine();

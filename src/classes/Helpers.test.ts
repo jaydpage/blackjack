@@ -13,13 +13,13 @@ describe("Helpers", () => {
       expect(playerHandDescription).toEqual(expected);
     });
   });
-  describe("printGameState", () => {
-    it("should print win message if there is a winner", () => {
+  describe("getGameStateDescription", () => {
+    it("should return win message if there is a winner", () => {
       // Arrange
       const gameState = {
         hasWinner: true,
-        winner: "Player",
         message: "Pontoon",
+        winner: "Player",
       };
       // Act
       const gameStateDescription = helpers.getGameStateDescription(gameState);
@@ -27,12 +27,12 @@ describe("Helpers", () => {
       const expected = "Player wins. Reason: Pontoon";
       expect(gameStateDescription).toEqual(expected);
     });
-    it("should print in progress message if there is no winner", () => {
+    it("should return in progress message if there is no winner", () => {
       // Arrange
       const gameState = {
         hasWinner: false,
-        winner: "",
         message: "",
+        winner: "",
       };
       // Act
       const gameStateDescription = helpers.getGameStateDescription(gameState);

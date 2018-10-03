@@ -1,6 +1,6 @@
 import ICard from "../interfaces/ICard";
 import IGameState from "../interfaces/IGameState";
-import { commandLineInterface } from "./CommandLineInterface";
+import { commandLine } from "./CommandLine";
 import Deck from "./Deck";
 import { evaluator } from "./Evaluator";
 import { rules } from "./Rules";
@@ -31,9 +31,9 @@ export default class Game {
 
   private _printHands() {
     console.log("---------Player Hand---------");
-    commandLineInterface.printHand(this._playerHand);
+    commandLine.printHand(this._playerHand);
     console.log("---------Dealer Hand---------");
-    commandLineInterface.printHand(this._dealerHand);
+    commandLine.printHand(this._dealerHand);
   }
 
   private _dealCardTo(hand: ICard[]) {
@@ -48,7 +48,7 @@ export default class Game {
     }
 
     while (!this._getGameState().hasWinner) {
-      const userChoice = commandLineInterface.promptUserAction();
+      const userChoice = commandLine.promptUserAction();
       if (userChoice === "Hit") {
         this._dealCardTo(this._playerHand);
       }
@@ -66,7 +66,7 @@ export default class Game {
 
   private _end(gameState: IGameState) {
     this._printHands();
-    commandLineInterface.printGameState(gameState);
+    commandLine.printGameState(gameState);
   }
 
   private _dealRemainderOfDealerHand() {
