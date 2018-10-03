@@ -8,16 +8,16 @@ class Rules {
     if (rules.isPontoon(playerHand)) {
       return this._buildGameState("Player", "Pontoon");
     }
-    if (rules.isFiveCardTrick(playerHand)) {
+    if (rules._isFiveCardTrick(playerHand)) {
       return this._buildGameState("Player", "Five card trick");
     }
-    if (rules.isBust(playerHand)) {
+    if (rules._isBust(playerHand)) {
       return this._buildGameState("Dealer", "Player is bust");
     }
-    if (rules.isBust(dealerHand)) {
+    if (rules._isBust(dealerHand)) {
       return this._buildGameState("Player", "Dealer is bust");
     }
-    if (rules.isGameATie(playerHand, dealerHand)) {
+    if (rules._isGameATie(playerHand, dealerHand)) {
       return this._buildGameState("Dealer", "Game is tie");
     }
 
@@ -37,15 +37,7 @@ class Rules {
     }, 0);
   }
 
-  private _buildGameState(winner: string, message: string) {
-    return {
-      hasWinner: winner ? true : false,
-      message,
-      winner,
-    };
-  }
-
-  private isPontoon(hand: ICard[]): boolean {
+  public isPontoon(hand: ICard[]): boolean {
     const pictureCardNames = ["Jack", "Queen", "King"];
     const cardNamesInHand = hand.map((card) => card.name);
 
@@ -58,16 +50,24 @@ class Rules {
     return containsTwoCards && containsAce && containsPictureCard;
   }
 
-  private isFiveCardTrick(hand: ICard[]): boolean {
-    const isNotBust = !this.isBust(hand);
+  private _buildGameState(winner: string, message: string) {
+    return {
+      hasWinner: winner ? true : false,
+      message,
+      winner,
+    };
+  }
+
+  private _isFiveCardTrick(hand: ICard[]): boolean {
+    const isNotBust = !this._isBust(hand);
     const hasFiveCards = hand.length === 5;
 
     return isNotBust && hasFiveCards;
   }
 
-  private isGameATie(playerHand: ICard[], dealerHand: ICard[]) {
+  private _isGameATie(playerHand: ICard[], dealerHand: ICard[]) {
     const playerScore = this.getScore(playerHand);
-    const playerIsNotBust = !this.isBust(playerHand);
+    const playerIsNotBust = !this._isBust(playerHand);
     const dealerScore = this.getScore(dealerHand);
     const dealerMinScoreSatisfied = dealerScore >= 17;
     return (
@@ -75,7 +75,7 @@ class Rules {
     );
   }
 
-  private isBust(hand: ICard[]) {
+  private _isBust(hand: ICard[]) {
     const score = this.getScore(hand);
     return score > this.blackjackScore;
   }

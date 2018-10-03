@@ -14,23 +14,23 @@ class CommandLine {
     ];
 
     return inquirer.prompt(questions).then((answers: any) => {
-      return answers.choice as string;
+      return answers.choice;
     });
   }
 
   public printHand(hand: ICard[], handName: string) {
     const handDescription = helpers.getHandDescription(hand);
-    console.log(`---------${handName}---------`);
+    console.log(`---------------${handName}---------------`);
     console.log(handDescription);
-    console.log("-----------------------------");
+    console.log("-----------------------------------------");
   }
 
   public printGameState(gameState: IGameState) {
     const gameStateDescription = helpers.getGameStateDescription(gameState);
-    console.log(`<<<<<<  ${gameStateDescription}  >>>>>>`);
-    console.log("-----------------------------");
-    console.log("          GAME OVER          ");
-    console.log("-----------------------------");
+    console.log(`<<< ${gameStateDescription} >>>`);
+    console.log("-----------------------------------------");
+    console.log("                GAME OVER                ");
+    console.log("-----------------------------------------");
   }
 }
 

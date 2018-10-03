@@ -28,23 +28,17 @@ export default class Game {
     this._dealCardTo(this._dealerHand);
   }
 
-  private _printHands() {
-    this._printPlayerHand();
-    this._printDealerHand();
-  }
-
   private _dealCardTo(hand: ICard[]) {
     const card = this._deck.drawCard();
     hand.push(card);
   }
 
-  private async _play() {
-    const gameState = this._getGameState();
-    if (gameState.hasWinner) {
-      return gameState;
+  private async _play(): Promise<IGameState> {
+    if (rules.isPontoon(this._playerHand)) {
+      return this._getGameState();
     }
 
-    while (!this._getGameState().hasWinner) {
+    do {
       const choice = await commandLine.promptUserAction();
       if (choice === "Hit") {
         this._dealCardTo(this._playerHand);
@@ -53,7 +47,7 @@ export default class Game {
       if (choice === "Stay") {
         this._dealRemainderOfDealerHand();
       }
-    }
+    } while (!this._getGameState().hasWinner);
 
     return this._getGameState();
   }
@@ -71,6 +65,11 @@ export default class Game {
     while (rules.getScore(this._dealerHand) < 17) {
       this._dealCardTo(this._dealerHand);
     }
+  }
+
+  private _printHands() {
+    this._printPlayerHand();
+    this._printDealerHand();
   }
 
   private _printPlayerHand() {
