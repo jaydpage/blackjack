@@ -13,11 +13,6 @@ export default class Game {
     this._startNewGame();
   }
 
-  private _dealCardTo(hand: ICard[]) {
-    const card = this._deck.drawCard();
-    hand.push(card);
-  }
-
   private _startNewGame() {
     this._resetGame();
     this._dealInitialHands();
@@ -35,6 +30,11 @@ export default class Game {
     this._dealCardTo(this._dealerHand);
     this._dealCardTo(this._playerHand);
     this._dealCardTo(this._dealerHand);
+  }
+
+  private _dealCardTo(hand: ICard[]) {
+    const card = this._deck.drawCard();
+    hand.push(card);
   }
 
   private _continueGame() {
@@ -75,39 +75,19 @@ export default class Game {
 
   private _getGameState(): IGameState {
     if (rules.isPontoon(this._playerHand)) {
-      return {
-        hasWinner: true,
-        winner: "Player",
-        message: "Pontoon",
-      };
+      return this._buildGameState("Player", "Pontoon");
     }
     if (rules.isFiveCardTrick(this._playerHand)) {
-      return {
-        hasWinner: true,
-        winner: "Player",
-        message: "Five card trick",
-      };
+      return this._buildGameState("Player", "Five card trick");
     }
     if (rules.isBust(this._playerHand)) {
-      return {
-        hasWinner: true,
-        winner: "Dealer",
-        message: "Player is bust",
-      };
+      return this._buildGameState("Dealer", "Player is bust");
     }
     if (rules.isBust(this._dealerHand)) {
-      return {
-        hasWinner: true,
-        winner: "Player",
-        message: "Dealer is bust",
-      };
+      return this._buildGameState("Dealer", "Dealer is bust");
     }
     if (rules.isGameATie(this._playerHand, this._dealerHand)) {
-      return {
-        hasWinner: true,
-        winner: "Dealer",
-        message: "Game is tie",
-      };
+      return this._buildGameState("Dealer", "Game is tie");
     }
 
     const playerScore = rules.getScore(this._playerHand);
@@ -115,17 +95,16 @@ export default class Game {
 
     if (dealerScore >= 17) {
       const winner = playerScore > dealerScore ? "Player" : "Dealer";
-      return {
-        hasWinner: true,
-        winner,
-        message: `${winner} has more points`,
-      };
+      return this._buildGameState(winner, `${winner} has more points`);
     }
+    return this._buildGameState("", "");
+  }
 
+  private _buildGameState(winner: string, message: string) {
     return {
-      hasWinner: false,
-      winner: "",
-      message: "",
+      hasWinner: winner ? true : false,
+      winner,
+      message,
     };
   }
 }
