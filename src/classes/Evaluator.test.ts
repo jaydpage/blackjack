@@ -1,6 +1,6 @@
-import { evaluator } from "./Evaluator";
-import { cards } from "../test_helpers/cards";
 import ICard from "../interfaces/ICard";
+import { cards } from "../test_helpers/cards";
+import { evaluator } from "./Evaluator";
 
 describe("Evaluator", () => {
   describe("getGameState", () => {
@@ -11,8 +11,8 @@ describe("Evaluator", () => {
         const dealerHand = [cards.threeOfClubs, cards.kingOfClubs];
         const expected = {
           hasWinner: false,
-          winner: "",
           message: "",
+          winner: "",
         };
         // Act
         const gameState = evaluator.getGameState(playerHand, dealerHand);
@@ -27,8 +27,8 @@ describe("Evaluator", () => {
         const dealerHand = [] as ICard[];
         const expected = {
           hasWinner: true,
-          winner: "Player",
           message: "Pontoon",
+          winner: "Player",
         };
         // Act
         const gameState = evaluator.getGameState(playerHand, dealerHand);
@@ -49,8 +49,8 @@ describe("Evaluator", () => {
         const dealerHand = [] as ICard[];
         const expected = {
           hasWinner: true,
-          winner: "Player",
           message: "Five card trick",
+          winner: "Player",
         };
         // Act
         const gameState = evaluator.getGameState(playerHand, dealerHand);
@@ -69,8 +69,8 @@ describe("Evaluator", () => {
         const dealerHand = [] as ICard[];
         const expected = {
           hasWinner: true,
-          winner: "Dealer",
           message: "Player is bust",
+          winner: "Dealer",
         };
         // Act
         const gameState = evaluator.getGameState(playerHand, dealerHand);
@@ -89,8 +89,8 @@ describe("Evaluator", () => {
         ];
         const expected = {
           hasWinner: true,
-          winner: "Player",
           message: "Dealer is bust",
+          winner: "Player",
         };
         // Act
         const gameState = evaluator.getGameState(playerHand, dealerHand);
@@ -108,8 +108,8 @@ describe("Evaluator", () => {
           ];
           const expected = {
             hasWinner: true,
-            winner: "Dealer",
             message: "Game is tie",
+            winner: "Dealer",
           };
           // Act
           const gameState = evaluator.getGameState(playerHand, dealerHand);
@@ -124,12 +124,12 @@ describe("Evaluator", () => {
           const dealerHand = [
             cards.sixOfClubs,
             cards.fiveOfClubs,
-            cards.jackOfHearts   
+            cards.jackOfHearts,
           ];
           const expected = {
             hasWinner: true,
-            winner: "Dealer",
             message: "Game is tie",
+            winner: "Dealer",
           };
           // Act
           const gameState = evaluator.getGameState(playerHand, dealerHand);

@@ -1,5 +1,5 @@
 export default interface IGameState {
-    hasWinner: boolean;
-    winner: string;
-    message: string;
-  }
+  hasWinner: boolean;
+  winner: string;
+  message: string;
+}

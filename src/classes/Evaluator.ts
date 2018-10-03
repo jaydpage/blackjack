@@ -33,8 +33,8 @@ class Evaluator {
   private _buildGameState(winner: string, message: string) {
     return {
       hasWinner: winner ? true : false,
-      winner,
       message,
+      winner,
     };
   }
 }

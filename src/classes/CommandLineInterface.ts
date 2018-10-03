@@ -1,6 +1,6 @@
 import ICard from "../interfaces/ICard";
-import { helpers } from "./Helpers";
 import IGameState from "../interfaces/IGameState";
+import { helpers } from "./Helpers";
 
 class CommandLineInterface {
   public promptUserAction(): string {

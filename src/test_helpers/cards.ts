@@ -56,4 +56,3 @@ export const cards = {
   queenOfClubs: { name: "Queen", suit: "Clubs", value: 10 },
   kingOfClubs: { name: "King", suit: "Clubs", value: 10 },
 };
-

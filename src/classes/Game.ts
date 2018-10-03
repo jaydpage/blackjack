@@ -1,9 +1,9 @@
 import ICard from "../interfaces/ICard";
 import IGameState from "../interfaces/IGameState";
-import Deck from "./Deck";
-import { rules } from "./Rules";
 import { commandLineInterface } from "./CommandLineInterface";
+import Deck from "./Deck";
 import { evaluator } from "./Evaluator";
+import { rules } from "./Rules";
 
 export default class Game {
   constructor(
@@ -30,9 +30,9 @@ export default class Game {
   }
 
   private _printHands() {
-    console.log('---------Player Hand---------');
+    console.log("---------Player Hand---------");
     commandLineInterface.printHand(this._playerHand);
-    console.log('---------Dealer Hand---------');
+    console.log("---------Dealer Hand---------");
     commandLineInterface.printHand(this._dealerHand);
   }
 
