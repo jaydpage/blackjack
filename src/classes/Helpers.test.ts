@@ -24,7 +24,7 @@ describe("Helpers", () => {
       // Act
       const gameStateDescription = helpers.getGameStateDescription(gameState);
       // Assert
-      const expected = "Player wins. Reason: Pontoon";
+      const expected = "Player wins. Pontoon";
       expect(gameStateDescription).toEqual(expected);
     });
     it("should return in progress message if there is no winner", () => {

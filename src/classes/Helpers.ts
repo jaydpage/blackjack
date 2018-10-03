@@ -13,7 +13,7 @@ class Helpers {
 
   public getGameStateDescription(gameState: IGameState): string {
     if(gameState.hasWinner){
-      return `${gameState.winner} wins. Reason: ${gameState.message}`;
+      return `${gameState.winner} wins. ${gameState.message}`;
     }
     return "Game is still in progress";
   }

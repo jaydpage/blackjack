@@ -13,11 +13,11 @@ export default class Game {
     this._start();
   }
 
-  private _start() {
+  private async _start() {
     this._dealInitialHands();
     this._printHands();
 
-    const gameState = this._play();
+    const gameState = await this._play();
     this._end(gameState);
   }
 
@@ -40,18 +40,20 @@ export default class Game {
     hand.push(card);
   }
 
-  private _play() {
+  private async _play() {
     const gameState = this._getGameState();
     if (gameState.hasWinner) {
       return gameState;
     }
 
     while (!this._getGameState().hasWinner) {
-      const userChoice = commandLine.promptUserAction();
-      if (userChoice === "Hit") {
+      const choice = await commandLine.promptUserAction();
+      if (choice === "Hit") {
         this._dealCardTo(this._playerHand);
+        console.log("---------Player Hand---------");
+        commandLine.printHand(this._playerHand);
       }
-      if (userChoice === "Pass") {
+      if (choice === "Stay") {
         this._dealRemainderOfDealerHand();
       }
     }
