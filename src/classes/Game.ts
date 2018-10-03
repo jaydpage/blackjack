@@ -2,7 +2,6 @@ import ICard from "../interfaces/ICard";
 import IGameState from "../interfaces/IGameState";
 import { commandLine } from "./CommandLine";
 import Deck from "./Deck";
-import { evaluator } from "./Evaluator";
 import { rules } from "./Rules";
 
 export default class Game {
@@ -61,7 +60,7 @@ export default class Game {
   }
 
   private _getGameState() {
-    return evaluator.getGameState(this._playerHand, this._dealerHand);
+    return rules.getGameState(this._playerHand, this._dealerHand);
   }
 
   private _end(gameState: IGameState) {
