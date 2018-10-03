@@ -1,4 +1,5 @@
 import ICard from "../interfaces/ICard";
+import IGameState from "../interfaces/IGameState";
 
 class Printer {
   public printHand(hand: ICard[]): string {
@@ -10,7 +11,7 @@ class Printer {
     return handDescription.trim();
   }
 
-  public printGameState(gameState: any): string {
+  public printGameState(gameState: IGameState): string {
     if(gameState.hasWinner){
       return `${gameState.winner} wins. Reason: ${gameState.message}`;
     }

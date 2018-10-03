@@ -1,4 +1,5 @@
 import ICard from "../interfaces/ICard";
+import IGameState from "../interfaces/IGameState";
 import Deck from "./Deck";
 import { printer } from "./Printer";
 import { rules } from "./Rules";
@@ -18,12 +19,12 @@ export default class Game {
   }
 
   private _startNewGame() {
-    this._resetGameState();
+    this._resetGame();
     this._dealInitialHands();
     this._continueGame();
   }
 
-  private _resetGameState() {
+  private _resetGame() {
     this._deck = new Deck();
     this._playerHand = [];
     this._dealerHand = [];
@@ -55,9 +56,9 @@ export default class Game {
     this._endGame(this._getGameState());
   }
 
-  private _endGame(gameState: any) {
-    this._printPlayerHand();
-    this._printDealerHand();
+  private _endGame(gameState: IGameState) {
+    printer.printHand(this._playerHand);
+    printer.printHand(this._dealerHand);
     printer.printGameState(gameState);
   }
 
@@ -72,15 +73,7 @@ export default class Game {
     }
   }
 
-  private _printPlayerHand(): string {
-    return printer.printHand(this._playerHand);
-  }
-
-  private _printDealerHand(): string {
-    return printer.printHand(this._dealerHand);
-  }
-
-  private _getGameState(): any {
+  private _getGameState(): IGameState {
     if (rules.isPontoon(this._playerHand)) {
       return {
         hasWinner: true,
