@@ -145,4 +145,38 @@ describe("Rules", () => {
       expect(result).toBe(false);
     });
   });
+  describe("isBust", () =>{
+    it("should return true if the sum of the card values is over 21", () => {
+      // Arrange
+      const playerHand = [
+        cards.tenOfHearts,
+        cards.threeOfClubs,
+        cards.tenOfSpades,
+      ];
+      // Act
+      const result = rules.isBust(playerHand);
+      // Assert
+      expect(result).toBe(true);
+    });
+    it("should return false if the sum of the card values is less than or equal to 21", () => {
+      // Arrange
+      const playerHand = [
+        cards.sixOfDiamonds,
+        cards.sevenOfSpades,
+        cards.fourOfClubs,
+      ];
+
+      const dealerHand = [
+        cards.twoOfHearts,
+        cards.threeOfClubs,
+        cards.tenOfSpades,
+      ];
+      // Act
+      const playerResult = rules.isBust(playerHand);
+      const dealerResult = rules.isBust(dealerHand);
+      // Assert
+      expect(playerResult).toBe(false);
+      expect(dealerResult).toBe(false);
+    });
+  });
 });
