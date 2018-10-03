@@ -1,7 +1,7 @@
 import ICard from "../interfaces/ICard";
 import IGameState from "../interfaces/IGameState";
 
-class Helpers {
+class Printer {
   public getHandDescription(hand: ICard[]): string {
     let handDescription = "";
     hand.map((card) => {
@@ -12,7 +12,7 @@ class Helpers {
   }
 
   public getGameStateDescription(gameState: IGameState): string {
-    if(gameState.hasWinner){
+    if (gameState.hasWinner) {
       return `${gameState.winner} wins. ${gameState.message}`;
     }
     return "Game is still in progress";
@@ -23,4 +23,4 @@ class Helpers {
   }
 }
 
-export const helpers = new Helpers();
+export const printer = new Printer();

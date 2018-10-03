@@ -14,22 +14,26 @@ export default class Game {
   }
 
   private async _start() {
-    this._dealInitialHands();
-    this._printHands();
+    await this._dealInitialHands();
 
     const gameState = await this._play();
     this._end(gameState);
   }
 
-  private _dealInitialHands() {
-    this._dealCardTo(this._playerHand);
-    this._dealCardTo(this._dealerHand);
-    this._dealCardTo(this._playerHand);
-    this._dealCardTo(this._dealerHand);
+  private async _dealInitialHands() {
+    await this._dealCardTo(this._playerHand);
+    await this._dealCardTo(this._playerHand);
+    this._printPlayerHand();
+    await this._dealCardTo(this._dealerHand);
+    await this._dealCardTo(this._dealerHand);
+    this._printDealerHand();
   }
 
-  private _dealCardTo(hand: ICard[]) {
+  private async _dealCardTo(hand: ICard[]) {
     const card = this._deck.drawCard();
+    if (card.name === "Ace") {
+      card.value = await commandLine.promptAceValue();
+    }
     hand.push(card);
   }
 
@@ -39,9 +43,9 @@ export default class Game {
     }
 
     do {
-      const choice = await commandLine.promptUserAction();
+      const choice = await commandLine.promptTurnChoice();
       if (choice === "Hit") {
-        this._dealCardTo(this._playerHand);
+        await this._dealCardTo(this._playerHand);
         this._printPlayerHand();
       }
       if (choice === "Stay") {
@@ -57,7 +61,8 @@ export default class Game {
   }
 
   private _end(gameState: IGameState) {
-    this._printHands();
+    this._printPlayerHand();
+    this._printDealerHand();
     commandLine.printGameState(gameState);
   }
 
@@ -65,11 +70,6 @@ export default class Game {
     while (rules.getScore(this._dealerHand) < 17) {
       this._dealCardTo(this._dealerHand);
     }
-  }
-
-  private _printHands() {
-    this._printPlayerHand();
-    this._printDealerHand();
   }
 
   private _printPlayerHand() {
