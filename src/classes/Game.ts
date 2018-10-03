@@ -29,10 +29,8 @@ export default class Game {
   }
 
   private _printHands() {
-    console.log("---------Player Hand---------");
-    commandLine.printHand(this._playerHand);
-    console.log("---------Dealer Hand---------");
-    commandLine.printHand(this._dealerHand);
+    this._printPlayerHand();
+    this._printDealerHand();
   }
 
   private _dealCardTo(hand: ICard[]) {
@@ -50,8 +48,7 @@ export default class Game {
       const choice = await commandLine.promptUserAction();
       if (choice === "Hit") {
         this._dealCardTo(this._playerHand);
-        console.log("---------Player Hand---------");
-        commandLine.printHand(this._playerHand);
+        this._printPlayerHand();
       }
       if (choice === "Stay") {
         this._dealRemainderOfDealerHand();
@@ -74,5 +71,15 @@ export default class Game {
     while (rules.getScore(this._dealerHand) < 17) {
       this._dealCardTo(this._dealerHand);
     }
+  }
+
+  private _printPlayerHand() {
+    const handName = "Player Hand";
+    commandLine.printHand(this._playerHand, handName);
+  }
+
+  private _printDealerHand() {
+    const handName = "Dealer Hand";
+    commandLine.printHand(this._dealerHand, handName);
   }
 }

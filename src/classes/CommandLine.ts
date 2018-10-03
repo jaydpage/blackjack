@@ -18,9 +18,11 @@ class CommandLine {
     });
   }
 
-  public printHand(hand: ICard[]) {
+  public printHand(hand: ICard[], handName: string) {
     const handDescription = helpers.getHandDescription(hand);
+    console.log(`---------${handName}---------`);
     console.log(handDescription);
+    console.log("-----------------------------");
   }
 
   public printGameState(gameState: IGameState) {
@@ -29,7 +31,6 @@ class CommandLine {
     console.log("-----------------------------");
     console.log("          GAME OVER          ");
     console.log("-----------------------------");
-
   }
 }
 
