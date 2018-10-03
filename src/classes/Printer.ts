@@ -10,10 +10,16 @@ class Printer {
     return handDescription.trim();
   }
 
+  public printGameState(gameState: any): string {
+    if(gameState.hasWinner){
+      return `${gameState.winner} wins. Reason: ${gameState.message}`;
+    }
+    return "Game is still in progress";
+  }
+
   private _getCardDescription(card: ICard): string {
     return `${card.name} of ${card.suit} (${card.value})`;
   }
-
 }
 
 export const printer = new Printer();

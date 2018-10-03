@@ -9,7 +9,7 @@ export default class Game {
   private _dealerHand: ICard[];
 
   constructor() {
-    this._startNew();
+    this._startNewGame();
   }
 
   private _dealCardTo(hand: ICard[]) {
@@ -17,17 +17,10 @@ export default class Game {
     hand.push(card);
   }
 
-  private _startNew() {
+  private _startNewGame() {
     this._resetGameState();
     this._dealInitialHands();
-
-    this._playPlayerHand();
-  }
-
-  private _evaluateGameState() {
-    if (rules.isPontoon(this._playerHand)) {
-      // End Game
-    }
+    this._continueGame();
   }
 
   private _resetGameState() {
@@ -43,15 +36,34 @@ export default class Game {
     this._dealCardTo(this._dealerHand);
   }
 
-  private _playPlayerHand() {
-    // Loop while no winner
-        // Prompt the player to Hit or Pass
-          // If Hit, deal another card to the player
-            // Evaluate game state
-        // If Pass
-          // Deal remainder of dealer hand
-            // Evaluate game state
-    //
+  private _continueGame() {
+    const gameState = this._getGameState();
+    if (gameState.hasWinner) {
+      this._endGame(gameState);
+    }
+
+    while (!this._getGameState().hasWinner) {
+      const userChoice = this._promptUserAction();
+      if (userChoice === "Hit") {
+        this._dealCardTo(this._playerHand);
+      }
+      if (userChoice === "Pass") {
+        this._dealRemainderOfDealerHand();
+      }
+    }
+
+    this._endGame(this._getGameState());
+  }
+
+  private _endGame(gameState: any) {
+    this._printPlayerHand();
+    this._printDealerHand();
+    printer.printGameState(gameState);
+  }
+
+  private _promptUserAction(): string {
+    //Capture user input and return
+    return "Hit";
   }
 
   private _dealRemainderOfDealerHand() {
@@ -68,22 +80,59 @@ export default class Game {
     return printer.printHand(this._dealerHand);
   }
 
-  private _determineWinner(): string {
+  private _getGameState(): any {
+    if (rules.isPontoon(this._playerHand)) {
+      return {
+        hasWinner: true,
+        winner: "Player",
+        message: "Pontoon",
+      };
+    }
     if (rules.isFiveCardTrick(this._playerHand)) {
-      return "Player Wins!";
+      return {
+        hasWinner: true,
+        winner: "Player",
+        message: "Five card trick",
+      };
     }
     if (rules.isBust(this._playerHand)) {
-      return "Dealer Wins!";
+      return {
+        hasWinner: true,
+        winner: "Dealer",
+        message: "Player is bust",
+      };
     }
     if (rules.isBust(this._dealerHand)) {
-      return "Player Wins!";
+      return {
+        hasWinner: true,
+        winner: "Player",
+        message: "Dealer is bust",
+      };
     }
     if (rules.isGameATie(this._playerHand, this._dealerHand)) {
-      return "Dealer Wins!";
+      return {
+        hasWinner: true,
+        winner: "Dealer",
+        message: "Game is tie",
+      };
     }
+
     const playerScore = rules.getScore(this._playerHand);
     const dealerScore = rules.getScore(this._dealerHand);
 
-    return playerScore > dealerScore ? "Player Wins!" : "Dealer Wins";
+    if (dealerScore >= 17) {
+      const winner = playerScore > dealerScore ? "Player" : "Dealer";
+      return {
+        hasWinner: true,
+        winner,
+        message: `${winner} has more points`,
+      };
+    }
+
+    return {
+      hasWinner: false,
+      winner: "",
+      message: "",
+    };
   }
 }
