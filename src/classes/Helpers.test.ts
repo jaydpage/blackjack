@@ -1,13 +1,13 @@
 import { cards } from "../test_helpers/cards";
-import { printer } from "./Printer";
+import { helpers } from "./Helpers";
 
-describe("Printer", () => {
-  describe("printHand", () => {
+describe("Helpers", () => {
+  describe("getHandDescription", () => {
     it("should print a description of the cards in a hand", () => {
       // Arrange
       const hand = [cards.eightOfClubs, cards.sixOfSpades];
       // Act
-      const playerHandDescription = printer.printHand(hand);
+      const playerHandDescription = helpers.getHandDescription(hand);
       // Assert
       const expected = "Eight of Clubs (8)\nSix of Spades (6)";
       expect(playerHandDescription).toEqual(expected);
@@ -22,7 +22,7 @@ describe("Printer", () => {
         message: "Pontoon",
       };
       // Act
-      const gameStateDescription = printer.printGameState(gameState);
+      const gameStateDescription = helpers.getGameStateDescription(gameState);
       // Assert
       const expected = "Player wins. Reason: Pontoon";
       expect(gameStateDescription).toEqual(expected);
@@ -35,7 +35,7 @@ describe("Printer", () => {
         message: "",
       };
       // Act
-      const gameStateDescription = printer.printGameState(gameState);
+      const gameStateDescription = helpers.getGameStateDescription(gameState);
       // Assert
       const expected = "Game is still in progress";
       expect(gameStateDescription).toEqual(expected);

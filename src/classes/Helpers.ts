@@ -1,8 +1,8 @@
 import ICard from "../interfaces/ICard";
 import IGameState from "../interfaces/IGameState";
 
-class Printer {
-  public printHand(hand: ICard[]): string {
+class Helpers {
+  public getHandDescription(hand: ICard[]): string {
     let handDescription = "";
     hand.map((card) => {
       const cardDescription = this._getCardDescription(card);
@@ -11,7 +11,7 @@ class Printer {
     return handDescription.trim();
   }
 
-  public printGameState(gameState: IGameState): string {
+  public getGameStateDescription(gameState: IGameState): string {
     if(gameState.hasWinner){
       return `${gameState.winner} wins. Reason: ${gameState.message}`;
     }
@@ -23,4 +23,4 @@ class Printer {
   }
 }
 
-export const printer = new Printer();
+export const helpers = new Helpers();
