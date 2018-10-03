@@ -74,4 +74,15 @@ describe("Deck", () => {
       expect(deck.cards).not.toEqual(cleanDeck);
     });
   });
+  describe("drawCard", () => {
+    it("should remove the top card of the deck and add return it", () => {
+      // Arrange
+      const deck = new Deck();
+      // Act
+      const card = deck.drawCard();
+      // Assert
+      expect(card).not.toEqual(deck.cards[0]);
+      expect(deck.cards.length).toBe(51);
+    });
+  });
 });

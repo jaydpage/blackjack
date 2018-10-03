@@ -1,5 +1,6 @@
 import ICard from "../interfaces/ICard";
 import Deck from "./Deck";
+import { printer } from "./Printer";
 import { rules } from "./Rules";
 
 export default class Game {
@@ -8,15 +9,23 @@ export default class Game {
   private _dealerHand: ICard[];
 
   constructor() {
-    this._begin();
+    this._startNew();
   }
 
-  public dealCardTo(hand: ICard[]) {
-    const card = this._deck.dealCard();
+  public printPlayerHand(): string {
+    return printer.printHand(this._playerHand);
+  }
+
+  public printDealerHand(): string {
+    return printer.printHand(this._dealerHand);
+  }
+
+  private _dealCardTo(hand: ICard[]) {
+    const card = this._deck.drawCard();
     hand.push(card);
   }
 
-  private _begin() {
+  private _startNew() {
     this._resetGameState();
     this._dealInitialHands();
 
@@ -32,10 +41,16 @@ export default class Game {
   }
 
   private _dealInitialHands() {
-    this.dealCardTo(this._playerHand);
-    this.dealCardTo(this._dealerHand);
-    this.dealCardTo(this._playerHand);
-    this.dealCardTo(this._dealerHand);
+    this._dealCardTo(this._playerHand);
+    this._dealCardTo(this._dealerHand);
+    this._dealCardTo(this._playerHand);
+    this._dealCardTo(this._dealerHand);
+  }
+
+  private _dealRemainderOfDealerHand() {
+    while (rules.getScore(this._dealerHand) < 17) {
+      this._dealCardTo(this._dealerHand);
+    }
   }
 
   private _determineWinner(): string {

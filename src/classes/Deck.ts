@@ -12,7 +12,7 @@ export default class Deck {
     return this._cards;
   }
 
-  public dealCard(): ICard {
+  public drawCard(): ICard {
     return this._cards.shift() as ICard;
   }
 
