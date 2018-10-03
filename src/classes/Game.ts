@@ -12,14 +12,6 @@ export default class Game {
     this._startNew();
   }
 
-  public printPlayerHand(): string {
-    return printer.printHand(this._playerHand);
-  }
-
-  public printDealerHand(): string {
-    return printer.printHand(this._dealerHand);
-  }
-
   private _dealCardTo(hand: ICard[]) {
     const card = this._deck.drawCard();
     hand.push(card);
@@ -29,8 +21,12 @@ export default class Game {
     this._resetGameState();
     this._dealInitialHands();
 
+    this._playPlayerHand();
+  }
+
+  private _evaluateGameState() {
     if (rules.isPontoon(this._playerHand)) {
-      // console.log("Player Wins!");
+      // End Game
     }
   }
 
@@ -47,10 +43,29 @@ export default class Game {
     this._dealCardTo(this._dealerHand);
   }
 
+  private _playPlayerHand() {
+    // Loop while no winner
+        // Prompt the player to Hit or Pass
+          // If Hit, deal another card to the player
+            // Evaluate game state
+        // If Pass
+          // Deal remainder of dealer hand
+            // Evaluate game state
+    //
+  }
+
   private _dealRemainderOfDealerHand() {
     while (rules.getScore(this._dealerHand) < 17) {
       this._dealCardTo(this._dealerHand);
     }
+  }
+
+  private _printPlayerHand(): string {
+    return printer.printHand(this._playerHand);
+  }
+
+  private _printDealerHand(): string {
+    return printer.printHand(this._dealerHand);
   }
 
   private _determineWinner(): string {
@@ -68,11 +83,6 @@ export default class Game {
     }
     const playerScore = rules.getScore(this._playerHand);
     const dealerScore = rules.getScore(this._dealerHand);
-
-    // console.log("playerScore", playerScore);
-    // console.log("dealerScore", dealerScore);
-    // console.log("_playerCards", this._playerHand);
-    // console.log("_dealerCards", this._dealerHand);
 
     return playerScore > dealerScore ? "Player Wins!" : "Dealer Wins";
   }
