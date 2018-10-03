@@ -6,10 +6,11 @@ import { commandLineInterface } from "./CommandLineInterface";
 import { evaluator } from "./Evaluator";
 
 export default class Game {
-  private _playerHand: ICard[];
-  private _dealerHand: ICard[];
-
-  constructor(private _deck: Deck = new Deck()) {
+  constructor(
+    private _deck: Deck = new Deck(),
+    private _playerHand: ICard[] = [],
+    private _dealerHand: ICard[] = [],
+  ) {
     this._start();
   }
 
@@ -29,7 +30,9 @@ export default class Game {
   }
 
   private _printHands() {
+    console.log('---------Player Hand---------');
     commandLineInterface.printHand(this._playerHand);
+    console.log('---------Dealer Hand---------');
     commandLineInterface.printHand(this._dealerHand);
   }
 
@@ -63,8 +66,7 @@ export default class Game {
   }
 
   private _end(gameState: IGameState) {
-    commandLineInterface.printHand(this._playerHand);
-    commandLineInterface.printHand(this._dealerHand);
+    this._printHands();
     commandLineInterface.printGameState(gameState);
   }
 

@@ -1,5 +1,5 @@
 import ICard from "../interfaces/ICard";
-import {helpers} from "./Helpers";
+import { helpers } from "./Helpers";
 import IGameState from "../interfaces/IGameState";
 
 class CommandLineInterface {
@@ -10,11 +10,13 @@ class CommandLineInterface {
 
   public printHand(hand: ICard[]) {
     const handDescription = helpers.getHandDescription(hand);
+    console.log(handDescription);
     //Print to console
   }
 
   public printGameState(gameState: IGameState) {
-    const handDescription = helpers.getGameStateDescription(gameState);
+    const gameStateDescription = helpers.getGameStateDescription(gameState);
+    console.log(gameStateDescription);
     //Print to console
   }
 }
