@@ -51,7 +51,6 @@ export default class Game {
       const userChoice = commandLineInterface.promptUserAction();
       if (userChoice === "Hit") {
         this._dealCardTo(this._playerHand);
-        commandLineInterface.printHand(this._playerHand);
       }
       if (userChoice === "Pass") {
         this._dealRemainderOfDealerHand();

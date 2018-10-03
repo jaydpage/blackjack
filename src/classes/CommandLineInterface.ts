@@ -4,20 +4,22 @@ import { helpers } from "./Helpers";
 
 class CommandLineInterface {
   public promptUserAction(): string {
-    //Capture user input and return
+    // Capture user input and return
     return "Hit";
   }
 
   public printHand(hand: ICard[]) {
+    console.log("hand:", hand);
     const handDescription = helpers.getHandDescription(hand);
     console.log(handDescription);
-    //Print to console
   }
 
   public printGameState(gameState: IGameState) {
     const gameStateDescription = helpers.getGameStateDescription(gameState);
-    console.log(gameStateDescription);
-    //Print to console
+    console.log("--------------------");
+    console.log("     GAME OVER      ");
+    console.log("--------------------");
+    console.log(`<<<<<<  ${gameStateDescription}  >>>>>>`);
   }
 }
 
