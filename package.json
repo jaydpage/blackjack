@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/index.ts n",
     "build": "tsc -p .",
-    "lint": "tslint -c tslint.json 'src/**/*.{ts}'",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "pretest": "npm run lint",
     "test": "jest"
   },
